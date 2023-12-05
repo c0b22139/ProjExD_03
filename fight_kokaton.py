@@ -157,13 +157,14 @@ class Explosion:
     """
     def __init__(self, bomb: Bomb):
         self.img = pg.image.load(f"{MAIN_DIR}/fig/explosion.gif")
+        # 爆発エフェクトの画像リスト
         self.explosions = [self.img, 
                       pg.transform.flip(self.img, True, False), 
                       pg.transform.flip(self.img, False, False), 
                       pg.transform.flip(self.img, False, True), ]
         self.rct = self.img.get_rect()
         self.rct.center = bomb.rct.center
-        self.life = 10
+        self.life = 10 # 爆発残り時間
     
     def update(self, screen: pg.surface):
         self.life -= 1
@@ -201,7 +202,7 @@ def main():
         
         for i, bomb in enumerate(bombs):
             if beam is not None and beam.rct.colliderect(bomb.rct):
-                explosions.append(Explosion(bomb))
+                explosions.append(Explosion(bomb)) # 爆発リストに追加
                 beam = None
                 bombs[i] = None
                 bird.change_img(6, screen)
