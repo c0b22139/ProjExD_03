@@ -156,7 +156,7 @@ class Explosion:
     爆発エフェクトに関するクラス
     """
     def __init__(self, bomb: Bomb):
-        self.img = pg.image.load(f"{MAIN_DIR}/fig/explosion.gif")
+        self.img = pg.image.load(f"{MAIN_DIR}/fig/explosion.gif") # pushしました
         # 爆発エフェクトの画像リスト
         self.explosions = [self.img, 
                       pg.transform.flip(self.img, True, False), 
@@ -177,11 +177,11 @@ class Score:
         self.font = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
         self.color = (0, 0, 255)
         self.score = 0
+    
+    def update(self, screen: pg.surface):
         self.img = self.font.render(f"スコア：{self.score}", 0, self.color)
         self.rct = self.img.get_rect()
         self.rct.center = (100, HEIGHT-50)
-    
-    def update(self, screen: pg.surface):
         screen.blit(self.img, self.rct)
 
 
