@@ -171,6 +171,19 @@ class Explosion:
         self.img = self.explosions[self.life%len(self.explosions)]
         screen.blit(self.img, self.rct)
 
+    
+class Score:
+    def __init__(self):
+        self.font = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
+        self.color = (0, 0, 255)
+        self.score = 0
+        self.img = self.font.render(f"スコア：{self.score}", 0, self.color)
+        self.rct = self.img.get_rect()
+        self.rct.center = (100, HEIGHT-50)
+    
+    def update(self, screen: pg.surface):
+        screen.blit(self.img, self.rct)
+
 
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
@@ -180,6 +193,7 @@ def main():
     bombs = [Bomb() for _ in range(NUM_OF_BOMBS)]
     explosions = []
     beams = []
+    sco = Score()
 
     clock = pg.time.Clock()
     tmr = 0
@@ -207,6 +221,7 @@ def main():
                     explosions.append(Explosion(bomb)) # 爆発リストに追加
                     beams[j] = None
                     bombs[i] = None
+                    sco.score += 1
                     bird.change_img(6, screen)
         bombs = [bomb for bomb in bombs if bomb is not None] # None除外リスト
         explosions = [explosion for explosion in explosions if explosion.life > 0] # 0以下除外リスト
@@ -220,6 +235,7 @@ def main():
             beam.update(screen)
         for explosion in explosions:
             explosion.update(screen)
+        sco.update(screen)
         pg.display.update()
         tmr += 1
         clock.tick(50)
